@@ -1,0 +1,4 @@
+# running total of money on the server (DO NOT EDIT)
+server_total_money: 0
+# running total of townblocks on the server (NOT IMPLEMENTED)
+num_townblocks: 0
