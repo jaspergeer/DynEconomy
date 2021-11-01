@@ -1,8 +1,0 @@
-world_name: 'world'
-money_per_chunk: 16
-money_per_player: 16
-base_max_money: 96
-currency_item: 'GOLD_ORE'
-currency_init_value: 1.25
-currency_half_value: 1
-money_steal_percentage: 0.2
