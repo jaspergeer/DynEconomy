@@ -20,6 +20,10 @@ public class TownyListener implements Listener {
 
     private DynEconomy plugin;
 
+    /**
+     *
+     * @param plugin DynEconomy insta
+     */
     public TownyListener(DynEconomy plugin) {
         this.plugin = plugin;
         Bukkit.getPluginManager().registerEvents(this, plugin);

@@ -21,6 +21,11 @@ public class EconomyCommands implements CommandExecutor {
     private final DynEconomy plugin;
     private final Material currency;
 
+    /**
+     * Creates a new EconomyCommands instance from the plugin config.
+     *
+     * @param plugin DynEconomy instance these commands are associated with
+     */
     public EconomyCommands(DynEconomy plugin) {
         this.plugin = plugin;
         currency = Material.matchMaterial(Objects.requireNonNull(plugin.getConfig().getString("currency_item")));
@@ -29,10 +34,13 @@ public class EconomyCommands implements CommandExecutor {
 
     // getter commands
 
-    double getPrice(int num_items) {
-        return 0;
-    }
-
+    /**
+     * Displays the current total money in circulation, money supply limit, and
+     * currency item unit price in a players chat box.
+     * Sub-command of /dyneconomy.
+     *
+     * @param p Player to broadcast message to
+     */
     void infoCommand(Player p) {
         p.sendMessage("");
         p.sendMessage("");
@@ -50,6 +58,14 @@ public class EconomyCommands implements CommandExecutor {
 
     // setter/interaction commands
 
+    /**
+     * Player sells a given amount of currency item to the server and recieives
+     * compensation accordingly. The per-unit price is calculated for each item
+     * so selling differing quantities will not affect the compensation amount.
+     * Sub-command of /dyneconomy.
+     *
+     * @param p Player selling items to the server
+     */
     void sellCommand(Player p) {
         ItemStack handStack = p.getInventory().getItemInMainHand();
         if (handStack.getType().equals(currency)) {
@@ -73,6 +89,14 @@ public class EconomyCommands implements CommandExecutor {
         }
     }
 
+    /**
+     * Player requests a quantity of money be given to another player or
+     * themselves and the specified Player receives the quantity of money.
+     * Sub-command of /dyneconomy.
+     *
+     * @param p Player to give money to
+     * @param args index 1 contains the amount of money
+     */
     void giveCommand(Player p, String[] args) {
         if (Array.getLength(args) > 2) {
             Player s = Bukkit.getPlayerExact(args[1]);
@@ -88,12 +112,28 @@ public class EconomyCommands implements CommandExecutor {
         }
     }
 
+    /**
+     * Give a Player a given amount of money.
+     *
+     * @param p Player to give money to
+     * @param amount Quantity of money to give player
+     */
     void give(Player p, BigDecimal amount) {
         Account a = plugin.getEcoAPI().getAccount(p.getUniqueId());
         a.addHoldings(amount);
         plugin.addTotalMoney(amount);
     }
 
+    /**
+     * Parse Player command and execute corresponding sub-command. This method
+     * is called whenever a command beginning with /de or /dyneconomy is run.
+     *
+     * @param sender source of the command
+     * @param cmd Command which was executed
+     * @param label alias of the command which was used
+     * @param args passed command arguments
+     * @return true if a valid command, otherwise false
+     */
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (!(sender instanceof Player)) {
