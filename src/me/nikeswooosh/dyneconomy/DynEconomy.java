@@ -6,6 +6,7 @@ import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
+
 import me.nikeswooosh.dyneconomy.commands.EconomyCommands;
 import me.nikeswooosh.dyneconomy.listeners.TownyListener;
 import net.tnemc.core.TNE;
@@ -28,6 +29,10 @@ public class DynEconomy extends JavaPlugin {
     private YamlConfiguration townyConfig = null;
     private TNEAPI ecoAPI = null;
 
+    /**
+     * Load our configuration file, create our TNE API and Towny instances and
+     * sync our plugin state with Towny and TNE.
+     */
     @Override
     public void onEnable() {
         File townyFile = new File(Towny.getPlugin().getConfigPath());
@@ -65,6 +70,13 @@ public class DynEconomy extends JavaPlugin {
         return calc_max_money;
     }
 
+    /**
+     * Returns the selling price of a single unit of our currency item. We
+     * evaluate this based on the current market cap and the values specified
+     * in config.yml.
+     *
+     * @return the selling price per unit of our item
+     */
     public double getUnitPrice() {
         double load_factor = getTotalMoney().divide(BigDecimal.valueOf(getMaxMoney()),
                 RoundingMode.HALF_UP).doubleValue();
@@ -79,6 +91,10 @@ public class DynEconomy extends JavaPlugin {
         }
     }
 
+    /**
+     * Calculates the total money stored in all town, nation, and player bank
+     * accounts and updates the total_money field using that value.
+     */
     public void syncTotalMoney() {
         BigDecimal total = new BigDecimal(0.00);
         Collection<Town> towns = townyUniverse.getTowns();
@@ -97,6 +113,11 @@ public class DynEconomy extends JavaPlugin {
         getLogger().info("Updated total money to $" + total);
     }
 
+    /**
+     * Calculates the current maximum amount of money using the number of town
+     * blocks claimed and total number of town residents. Updates the
+     * calc_max_money field using the value.
+     */
     public void syncMaxMoney() {
         double max = getConfig().getDouble("base_max_money");
         max += TownyAPI.getInstance().getTownyWorld(getConfig()
@@ -106,10 +127,21 @@ public class DynEconomy extends JavaPlugin {
         calc_max_money = max;
     }
 
+    /**
+     * Modifies the count of the total amount of money in circulation by a
+     * given amount.
+     *
+     * @param amount a BigDecimal to increase the total money count by
+     */
     public void addTotalMoney(BigDecimal amount) {
         total_money = total_money.add(amount);
     }
 
+    /**
+     * Modifies the count of the maximum amount of money by a given amount.
+     *
+     * @param amount a BigDecimal to increase the maximum money count by
+     */
     public void addMaxMoney(double amount) {
         calc_max_money += amount;
     }

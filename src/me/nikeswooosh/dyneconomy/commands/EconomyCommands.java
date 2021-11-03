@@ -88,43 +88,6 @@ public class EconomyCommands implements CommandExecutor {
         }
     }
 
-//    void townShop(Player p) {
-//        BlockIterator iter = new BlockIterator(p, 10);
-//        Block lastBlock = iter.next();
-//
-//        while (iter.hasNext()) {
-//
-//            lastBlock = iter.next();
-//
-//            if (lastBlock.getType() == Material.AIR) {
-//                continue;
-//            }
-//            break;
-//        }
-//        Location loc = lastBlock.getLocation();
-//
-//        Shop shop = QuickShopAPI.getShopAPI().getShop(loc);
-//        if (shop == null) {
-//            return;
-//        }
-//        p.sendMessage(shop.getSignText());
-//        if (Objects.requireNonNull(plugin.getTownyUniverse().getResident(p.getUniqueId())).hasTown()) {
-//            try {
-//                p.sendMessage(plugin.getEcoAPI().getAccount("town-" + TownyAPI.getInstance().getResident(p.getUniqueId()).getTown().getName()).displayName());
-//                shop.setOwner(Bukkit.getPlayerExact("town-" + TownyAPI.getInstance().getResident(p.getUniqueId()).getTown().getName()).getUniqueId());
-//            } catch (NotRegisteredException e) {
-//                e.printStackTrace();
-//            }
-//        }
-////        try {
-////            assert shop != null;
-////            shop.setOwner(Objects.requireNonNull(plugin.getTownyUniverse()
-////                    .getResident(p.getUniqueId())).getTown().getUUID());
-////        } catch (NotRegisteredException e) {
-////            e.printStackTrace();
-////        }
-//    }
-
     void give(Player p, BigDecimal amount) {
         Account a = plugin.getEcoAPI().getAccount(p.getUniqueId());
         a.addHoldings(amount);
@@ -160,11 +123,6 @@ public class EconomyCommands implements CommandExecutor {
                     }
                 } else if (args[0].equalsIgnoreCase("townshop")) {
                     p.sendMessage(Utils.chat("&cNot implemented yet!"));
-//                    if (p.hasPermission("dyneco.admin")) {
-//                        townShop(p);
-//                    } else {
-//                        p.sendMessage(Utils.chat("&cYou don't have permission to do that!"));
-//                    }
                 } else {
                     p.sendMessage(Utils.chat("&cI don't know that command!"));
                 }
