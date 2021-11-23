@@ -20,15 +20,15 @@ public class TownyListener implements Listener {
 
     private DynEconomy plugin;
 
-    /**
-     *
-     * @param plugin DynEconomy insta
-     */
     public TownyListener(DynEconomy plugin) {
         this.plugin = plugin;
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
 
+    /**
+     * When a town is deleted, remove the money kept in the town bank from our total count.
+     * @param e PreDeleteTownEvent that triggered this
+     */
     @EventHandler
     public void onTownDelete(PreDeleteTownEvent e) {
         double change = -1 * e.getTown().getAccount().getHoldingBalance();
@@ -38,6 +38,10 @@ public class TownyListener implements Listener {
         plugin.syncMaxMoney();
     }
 
+    /**
+     * When a nation is deleted, remove the money kept in the nation bank from our total count.
+     * @param e PreDeleteNationEvent that triggered this
+     */
     @EventHandler
     public void onNationDelete(PreDeleteNationEvent e) {
         double change = -1 * e.getNation().getAccount().getHoldingBalance();
@@ -45,6 +49,10 @@ public class TownyListener implements Listener {
         plugin.addTotalMoney(BigDecimal.valueOf(change));
     }
 
+    /**
+     * When a town is created, remove the money spent to create the town from our total count.
+     * @param e NewTownEvent that triggered this
+     */
     @EventHandler
     public void onNewTown(NewTownEvent e) {
         double change = -1 * Double.parseDouble(Objects.requireNonNull(plugin.getTownyConfig()
@@ -55,6 +63,11 @@ public class TownyListener implements Listener {
         plugin.syncMaxMoney();
     }
 
+    /**
+     * When a new nation is craeted, remove the money spent to create the nation from our total
+     * count.
+     * @param e NewNationEvent that triggered this
+     */
     @EventHandler
     public void onNewNation(NewNationEvent e) {
         double change = -1 * Double.parseDouble(Objects.requireNonNull(plugin.getTownyConfig()
@@ -63,6 +76,10 @@ public class TownyListener implements Listener {
         plugin.addTotalMoney(BigDecimal.valueOf(change));
     }
 
+    /**
+     * When a player claims a chunk, remove the money spent from our total count.
+     * @param e TownClaimEvent that triggered this
+     */
     @EventHandler
     public void onNewClaim(TownClaimEvent e) {
         TownBlock t = e.getTownBlock();
@@ -81,6 +98,10 @@ public class TownyListener implements Listener {
         plugin.addMaxMoney(change);
     }
 
+    /**
+     * When two towns merge, remove the money spent to merge from our total count.
+     * @param e TownMergeEvent that triggered this
+     */
     @EventHandler
     public void onTownMerge(TownMergeEvent e) {
         double change = -1 * Double.parseDouble(Objects.requireNonNull(plugin.getTownyConfig()
@@ -89,6 +110,10 @@ public class TownyListener implements Listener {
         plugin.addTotalMoney(BigDecimal.valueOf(change));
     }
 
+    /**
+     * Remove upkeep collected from our total count each in-game day.
+     * @param e NewDayEvent that triggered this
+     */
     @EventHandler
     public void onUpkeep(NewDayEvent e) {
         double change = -1 * (e.getNationUpkeepCollected() + e.getTownUpkeepCollected());
@@ -96,6 +121,10 @@ public class TownyListener implements Listener {
         plugin.addTotalMoney(BigDecimal.valueOf(change));
     }
 
+    /**
+     * Increase maximum money by amout specified in config when a new player joins.
+     * @param e PlayerJoinEvent that triggered this
+     */
     @EventHandler
     public void onPlayerFirstJoin(PlayerJoinEvent e) {
         if (!e.getPlayer().hasPlayedBefore()) {
@@ -105,20 +134,27 @@ public class TownyListener implements Listener {
         }
     }
 
+    /**
+     * When a player kills another player, they 'steal' an amount of money specified in config from
+     * the other player
+     * @param e PlayerDeathEvent that triggered this
+     */
     @EventHandler
     public void onKill(PlayerDeathEvent e) {
         Player killed = e.getEntity();
         Player killer = e.getEntity().getKiller();
-        BigDecimal killedBalance = plugin.getEcoAPI().getAccount(killed.getUniqueId()).getHoldings();
+        BigDecimal killedBalance =
+                plugin.getEcoAPI().getAccount(killed.getUniqueId()).getHoldings();
         if (!(killer == null)) {
             BigDecimal exchange = killedBalance.multiply(BigDecimal.valueOf(plugin.getConfig()
                     .getDouble("money_steal_percentage"))).setScale(2, RoundingMode.DOWN);
             plugin.getEcoAPI().getAccount(killed.getUniqueId()).removeHoldings(exchange);
             plugin.getEcoAPI().getAccount(killer.getUniqueId()).addHoldings(exchange);
-            killed.sendMessage(Utils.chat("&6$" + exchange.toString() + " &fwere stolen from you!"));
+            killed.sendMessage(Utils.chat("&6$" + exchange.toString() +
+                    " &fwere stolen from you!"));
             killer.sendMessage(Utils.chat("You stole &6$" + exchange.toString() + " &f!"));
-            plugin.getLogger().info(killer.getDisplayName() + " stole $" + killedBalance.toString() + " from " +
-                    killed.getDisplayName());
+            plugin.getLogger().info(killer.getDisplayName() + " stole $" + killedBalance.toString()
+                    + " from " + killed.getDisplayName());
         }
     }
 }

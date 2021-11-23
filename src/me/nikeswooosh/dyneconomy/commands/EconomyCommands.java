@@ -21,18 +21,11 @@ public class EconomyCommands implements CommandExecutor {
     private final DynEconomy plugin;
     private final Material currency;
 
-    /**
-     * Creates a new EconomyCommands instance from the plugin config.
-     *
-     * @param plugin DynEconomy instance these commands are associated with
-     */
     public EconomyCommands(DynEconomy plugin) {
         this.plugin = plugin;
         currency = Material.matchMaterial(Objects.requireNonNull(plugin.getConfig().getString("currency_item")));
         Objects.requireNonNull(plugin.getCommand("dyneconomy")).setExecutor(this);
     }
-
-    // getter commands
 
     /**
      * Displays the current total money in circulation, money supply limit, and
@@ -52,11 +45,10 @@ public class EconomyCommands implements CommandExecutor {
         p.sendMessage(Utils.chat("&6==========================="));
         p.sendMessage(Utils.chat("&2Curent Money Supply: &e" + plugin.getTotalMoney()));
         p.sendMessage(Utils.chat("&2Money Supply Limit: &e" + plugin.getMaxMoney()));
-        p.sendMessage(Utils.chat("&2Unit Price of &5" + currency.name() +"&2: &e" + plugin.getUnitPrice()));
+        p.sendMessage(Utils.chat("&2Unit Price of &5" + currency.name() +"&2: &e" +
+                plugin.getUnitPrice()));
         p.sendMessage(Utils.chat("&6==========================="));
     }
-
-    // setter/interaction commands
 
     /**
      * Player sells a given amount of currency item to the server and recieives
@@ -73,7 +65,8 @@ public class EconomyCommands implements CommandExecutor {
             handStack.setAmount(0);
             BigDecimal before = plugin.getEcoAPI().getAccount(p.getUniqueId()).getHoldings();
             for (int i = 0; i < num_sold; i++) {
-                BigDecimal s = BigDecimal.valueOf(plugin.getUnitPrice()).setScale(2, RoundingMode.DOWN);
+                BigDecimal s = BigDecimal.valueOf(plugin.getUnitPrice()).setScale(2,
+                        RoundingMode.DOWN);
                 if (s.compareTo(new BigDecimal(0)) == 0) {
                     p.getInventory().addItem(new ItemStack(Material.GOLD_ORE, num_sold - i));
                     p.sendMessage(Utils.chat("&c" + currency.name() + " &cis worthless!!!"));
@@ -82,10 +75,13 @@ public class EconomyCommands implements CommandExecutor {
                 plugin.getLogger().info(p.getDisplayName() + " sold item for " + s);
                 give(p, s);
             }
-            BigDecimal diff = plugin.getEcoAPI().getAccount(p.getUniqueId()).getHoldings().subtract(before);
-            p.sendMessage(Utils.chat("&2Sold $&6" + diff + " &2of &5" + currency.name() + " &2to the server!"));
+            BigDecimal diff =
+                    plugin.getEcoAPI().getAccount(p.getUniqueId()).getHoldings().subtract(before);
+            p.sendMessage(Utils.chat("&2Sold $&6" + diff + " &2of &5" + currency.name() +
+                    " &2to the server!"));
         } else {
-            p.sendMessage(Utils.chat("&cOnly &5" + currency.name() + " &ccan be sold to the server!"));
+            p.sendMessage(Utils.chat("&cOnly &5" + currency.name() +
+                    " &ccan be sold to the server!"));
         }
     }
 
@@ -103,7 +99,8 @@ public class EconomyCommands implements CommandExecutor {
             if (s == null) {
                 p.sendMessage(Utils.chat("&cCorrect usage: &f/dyneconomy give [player] [amount]"));
             } else {
-                BigDecimal floor = BigDecimal.valueOf(Double.parseDouble(args[2])).setScale(2, RoundingMode.DOWN);
+                BigDecimal floor = BigDecimal.valueOf(Double.parseDouble(args[2])).setScale(2,
+                        RoundingMode.DOWN);
                 give(s, floor);
                 p.sendMessage(Utils.chat("&2Gave player &5" + args[1] + " $" + floor));
             }
