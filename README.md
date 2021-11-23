@@ -1,5 +1,5 @@
 # DynEconomy
-A dynamic economy plugin for Minecraft Spigot
+This is a Spigot plugin I built for a Towny/Economy server that I thought I'd share
 
 Tested on Spigot 1.16
 
