@@ -2,7 +2,7 @@ name: DynEconomy
 version: 1.1
 depend: [Vault, Towny, Essentials, TheNewEconomy]
 author: NikeSwooosh
-main: me.nikeswooosh.dyneconomy.DynEconomy
+main: DynEconomy
 description: An economic simulation plugin
 api-version: 1.16
 

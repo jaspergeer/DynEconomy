@@ -1,9 +1,11 @@
 apply plugin: 'java'
 
+group 'com.jaspergeer'
+version '1.1'
+
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     implementation 'org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT'
-    implementation files('libs/EssentialsX-2.18.2.0.jar')
     implementation files('libs/QuickShop-4.0.8.1.jar')
     implementation files('libs/TNE.jar')
     implementation files('libs/Towny-0.97.0.0.jar')
@@ -25,7 +27,11 @@ repositories {
 }
 
 jar {
+    destinationDirectory = file("$buildDir/plugin-jar")
     manifest {
-        attributes 'Main-Class': 'me.nikeswooosh.dyneconomy.DynEconomy'
+        attributes 'Main-Class': 'com.jaspergeer.dyneconomy.DynEconomy'
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }
