@@ -1,5 +1,5 @@
 # DynEconomy
-This is a Spigot plugin I built for a Towny/Economy server that I thought I'd share. It adds a level of depth to the economic simulation by putting a soft cap on the amount of money players can create and making Towny into a dedicated money sink.
+This is a Minecraft Spigot plugin I built for a Towny/Economy server that I thought I'd share. It adds a level of depth to the economic simulation by putting a soft cap on the amount of money players can create and making Towny into a dedicated money sink.
 ### Versions
 * For 1.16.5 - [download .jar](https://www.mediafire.com/file/g196f7ddwb0kq5w/DynEconomy-1.1.jar/file)
 
