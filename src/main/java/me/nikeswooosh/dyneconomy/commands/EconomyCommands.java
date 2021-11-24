@@ -104,7 +104,7 @@ public class EconomyCommands implements CommandExecutor {
                 BigDecimal floor = BigDecimal.valueOf(Double.parseDouble(args[2])).setScale(2,
                         RoundingMode.DOWN);
                 give(s, floor);
-                p.sendMessage(Utils.chat("&2Gave player &5" + args[1] + " $" + floor));
+                p.sendMessage(Utils.chat("&2Gave player &5" + args[1] + " &2$" + floor));
             }
         } else {
             p.sendMessage(Utils.chat("&cCorrect usage: &f/dyneconomy give [player] [amount]"));
@@ -128,7 +128,7 @@ public class EconomyCommands implements CommandExecutor {
                 BigDecimal floor = BigDecimal.valueOf(Double.parseDouble(args[2])).setScale(2,
                         RoundingMode.DOWN);
                 give(s, floor.negate());
-                p.sendMessage(Utils.chat("&Took $" + floor + " from player &5" + args[1]));
+                p.sendMessage(Utils.chat("&2Took $" + floor + " from player &5" + args[1]));
             }
         } else {
             p.sendMessage(Utils.chat("&cCorrect usage: &f/dyneconomy take [player] [amount]"));
@@ -190,6 +190,7 @@ public class EconomyCommands implements CommandExecutor {
                 if (p.hasPermission("dyneco.admin")) {
                     plugin.syncMaxMoney();
                     plugin.syncTotalMoney();
+                    p.sendMessage(Utils.chat("&2Resynced plugin data"));
                 } else {
                     p.sendMessage(Utils.chat("&cYou don't have permission to do that!"));
                 }
