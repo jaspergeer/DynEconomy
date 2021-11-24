@@ -21,4 +21,3 @@ Step 2) This should generate a jarfile in build/plugin-jar. Move this jarfile to
 * [Spigot](https://www.spigotmc.org) - Minecraft server API
 * [TheNewEconomy](https://www.spigotmc.org/resources/the-new-economy.7805/) - Economy plugin
 * [Towny](https://www.spigotmc.org/resources/towny-advanced.72694/) - For claiming land, creating towns and nations
-* [Vault](https://www.spigotmc.org/resources/vault.34315/)
