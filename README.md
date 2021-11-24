@@ -1,14 +1,24 @@
 # DynEconomy
 This is a Spigot plugin I built for a Towny/Economy server that I thought I'd share. It adds a level of depth to the economic simulation by putting a soft cap on the amount of money players can create and making Towny into a dedicated money sink.
+### Versions
+* For 1.16.5 - [download .jar](https://www.mediafire.com/file/c9hb33hy82j4620/DynEconomy-1.1.jar/file)
 
 ## Getting Started
 ### Prerequisites
-* Spigot 1.16
-* TheNewEconomy
-* Towny
-* Vault
+* Java
+### Installation
+Step 1) Navigate to the root directory and run
+```
+gradlew jar
+```
+Step 2) This should generate a jarfile in build/plugin-jar. Move this jarfile to to your server plugins directory.
 
-Tested on Spigot 1.16
-
-Manage the flow of money in and our of your server's economy!
-Designate what items can be sold to the server and adjust inflation rates to limit how much money can be created!
+## Built With
+* [Java](https://www.java.com/en/) - Language the application is built in
+* [Intellij](https://www.jetbrains.com/idea/) - IDE used for development
+* [Gradle](https://gradle.org/features/) - Build automation tool
+### Dependencies
+* [Spigot](https://www.spigotmc.org)
+* [TheNewEconomy](https://www.spigotmc.org/resources/the-new-economy.7805/)
+* [Towny](https://www.spigotmc.org/resources/towny-advanced.72694/)
+* [Vault](https://www.spigotmc.org/resources/vault.34315/)
