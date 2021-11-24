@@ -1,0 +1,36 @@
+name: DynEconomy
+version: 1.1
+depend: [Vault, Towny, Essentials, TheNewEconomy]
+author: NikeSwooosh
+main: me.nikeswooosh.dyneconomy.DynEconomy
+description: An economic simulation plugin
+api-version: 1.16
+
+commands:
+    dyneconomy:
+        aliases: [dyneco, de]
+        description: The root DynEconomy command
+        usage:
+            Use /help dyneconomy [subcommand] for more information
+            /dyneconomy info - Display the current state of the economy
+            /dyneconomy sell - Sell a given amount of currency item to the server
+            /dyneconomy give - Give a player a given quantity of money
+            /dyneconomy take - Take a given quantity of money from a player
+
+    dyneconomy info:
+        aliases: [dyneconomy i]
+        description: Display the current state of the economy
+
+    dyneconomy give:
+        description: Give a player a given quantity of money
+        usage: /dyneconomy give [player] [amount]
+
+    dyneconomy take:
+        description: Take a given quantity of money from a player
+        usage: /dyneconomy take [player] [amount]
+
+permissions:
+    dyneco.player:
+        default: true
+    dyneco.admin:
+        default: op

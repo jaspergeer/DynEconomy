@@ -1,0 +1,16 @@
+# name of the world in which this plugin is enabled.
+world_name: 'world'
+# increase in the maximum money for each chunk claimed by a town.
+money_per_chunk: 16
+# increase in the maximum money for each player that joins the server.
+money_per_player: 16
+# the maximum amount of money for a server with no players and no claimed chunks.
+base_max_money: 96
+# item that can be sold the server for money. Non-renewable items highly recommended.
+currency_item: 'GOLD_ORE'
+# the value of the currency item when no money is in circulation.
+currency_init_value: 1.25
+# the value of the currency item when we reach half of the max money amount.
+currency_half_value: 1
+# what share of a player's money is taken when they are killed by another player.
+money_steal_percentage: 0.2

@@ -1,0 +1,31 @@
+apply plugin: 'java'
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    implementation 'org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT'
+    implementation files('libs/EssentialsX-2.18.2.0.jar')
+    implementation files('libs/QuickShop-4.0.8.1.jar')
+    implementation files('libs/TNE.jar')
+    implementation files('libs/Towny-0.97.0.0.jar')
+}
+
+repositories {
+    jcenter()
+    maven {
+        url 'https://hub.spigotmc.org/nexus/content/repositories/public/'
+
+        content {
+            includeGroup 'org.bukkit'
+            includeGroup 'org.spigotmc'
+        }
+    }
+
+    maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
+    maven { url = 'https://oss.sonatype.org/content/repositories/central' }
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'me.nikeswooosh.dyneconomy.DynEconomy'
+    }
+}
